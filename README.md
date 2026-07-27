@@ -1,50 +1,94 @@
-# arjunpatel96.github.io (GitHub Pages)
+# arjunpatel96.github.io → [arjun.live](https://arjun.live)
 
-One-page, modern tech-clean personal site for:
-- CV (condensed on-page + full PDF download)
-- Publications (full list)
-- Consulting / independent contracting services
-- Links to COBRAme.org + dissertation + profiles
+One-page personal site: condensed CV + full PDF, complete publication list,
+consulting services, and links to COBRAme.org / dissertation / profiles.
 
-## Quick start
+**Plain static HTML — no Jekyll, no build step, no JavaScript.** Edit the files,
+commit, push; GitHub Pages serves them directly. There is nothing to compile.
 
-1. Create a repo named **arjunpatel96.github.io** (public).
-2. Upload the contents of this folder to the repo root.
-3. In GitHub: **Settings → Pages**
-   - Source: `Deploy from a branch`
-   - Branch: `main` / root
-4. Your site will appear at:
-   - https://arjunpatel96.github.io
+## Layout
 
-## Point arjunpatel.io (Squarespace domains) to GitHub Pages
+```
+index.html            all page content (every section is an in-page anchor)
+styles.css            all styling, incl. @font-face for the self-hosted fonts
+404.html              custom not-found page
+robots.txt            allows everything, points at the sitemap
+sitemap.xml           single-URL sitemap
+CNAME                 arjun.live
+assets/
+  Arjun_Patel_CV.pdf  the downloadable CV
+  arjun.jpg           headshot, 420x420 (displayed at 140px, 3x DPR)
+  og-image.png        1200x630 social preview card
+  og-template.html    source for og-image.png — see "Regenerating" below
+  favicon.svg
+  fonts/              self-hosted IBM Plex Sans (variable) + Mono woff2
+```
 
-In your domain DNS settings, add:
+## Deployment
 
-### Apex domain via A records
-Set **A** records for `@` to:
+GitHub Pages, **Settings → Pages**: Source `Deploy from a branch`, branch
+**`master`** / root. Custom domain `arjun.live` with *Enforce HTTPS* enabled.
 
-- 185.199.108.153
-- 185.199.109.153
-- 185.199.110.153
-- 185.199.111.153
+DNS for the apex domain — **A** records for `@`:
 
-Set **CNAME** for `www` to:
-- `arjunpatel96.github.io`
+```
+185.199.108.153   185.199.109.153   185.199.110.153   185.199.111.153
+```
 
-### GitHub Pages Custom Domain
-In GitHub: **Settings → Pages → Custom domain**
-- enter `arjunpatel.io`
-- enable **Enforce HTTPS** once it becomes available
+and a **CNAME** for `www` → `arjunpatel96.github.io`.
 
-## Updating your CV
-Replace:
-- `assets/Arjun_Patel_CV.pdf`
+## Previewing locally
 
-Keep the filename the same so links don’t break.
+```bash
+python3 -m http.server 8000
+# then open http://127.0.0.1:8000/
+```
 
-## Editing content
-Main content:
-- `index.html`
+`http.server` sends no `Cache-Control`, so browsers will happily reuse a cached
+`styles.css` and the page looks unchanged after an edit. **Hard-refresh**
+(`Ctrl+Shift+R`), or keep DevTools open with *Disable cache* ticked. The same
+applies to arjun.live right after a push.
 
-Styling:
-- `styles.css`
+## Common edits
+
+**Update the CV** — replace `assets/Arjun_Patel_CV.pdf`, keeping the filename so
+the two download links keep working.
+
+**Add a publication** — publications are inline HTML in `index.html` under
+`<div class="pubs">`. Copy an existing `<li>` and fill in the four parts:
+
+```html
+<li><span class="pub-authors">Author A; <strong>Patel A</strong>; …</span>
+<span class="pub-title"><a class="pub-link" href="https://doi.org/10.…"
+  target="_blank" rel="noopener noreferrer">Title.</a></span>
+<span class="pub-venue"><strong>Journal</strong> vol(issue), pages.</span></li>
+```
+
+Every title links to its DOI — keep that up.
+
+**Adding a new year** also needs a colour stop in `styles.css`. The publication
+rail is a gradient that runs orange (recent) to blue (older), and each
+`#pub-YYYY` heading has a matching colour. A new year without one renders full
+orange and breaks the gradient.
+
+## Regenerating the social card
+
+`assets/og-image.png` is what LinkedIn/Slack/X show when the site is shared. It
+is rendered from `assets/og-template.html` so it stays in sync with the site's
+fonts and palette:
+
+```bash
+python3 -m http.server 8000
+google-chrome --headless --disable-gpu --hide-scrollbars \
+  --window-size=1200,630 --virtual-time-budget=7000 \
+  --screenshot=assets/og-image.png \
+  http://localhost:8000/assets/og-template.html
+```
+
+## Design notes
+
+Committed dark theme — there is deliberately no light mode. The palette is a
+flux map: warm near-black ground, **orange** (`#ff7a1a`) as the primary/hot pole,
+**blue** (`#35a9ff`) as the cold pole. Blue is reserved for the `↗` glyph, which
+marks links that leave the site. Type is IBM Plex Sans + Mono, self-hosted, with
+mono carrying years and citation metadata.

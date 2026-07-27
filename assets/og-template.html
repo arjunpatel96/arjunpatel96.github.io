@@ -1,0 +1,73 @@
+<!doctype html>
+<!--
+  Source for assets/og-image.png (the 1200x630 social preview card).
+  Not linked from the site — it exists so the card can be regenerated.
+
+  Regenerate:
+    python3 -m http.server 8000
+    google-chrome --headless --disable-gpu --hide-scrollbars \
+      --window-size=1200,630 --virtual-time-budget=7000 \
+      --screenshot=assets/og-image.png \
+      http://localhost:8000/assets/og-template.html
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face{
+    font-family:"IBM Plex Sans"; font-weight:100 700; font-style:normal;
+    src:url("fonts/IBMPlexSans-var-latin.woff2") format("woff2");
+  }
+  @font-face{
+    font-family:"IBM Plex Mono"; font-weight:400; font-style:normal;
+    src:url("fonts/IBMPlexMono-400-latin.woff2") format("woff2");
+  }
+  @font-face{
+    font-family:"IBM Plex Mono"; font-weight:500; font-style:normal;
+    src:url("fonts/IBMPlexMono-500-latin.woff2") format("woff2");
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    width:1200px; height:630px; overflow:hidden;
+    font-family:"IBM Plex Sans", sans-serif;
+    color:#f4ece5;
+    background:
+      radial-gradient(900px 520px at 8% -18%, rgba(255,122,26,.34), transparent 62%),
+      radial-gradient(700px 460px at 96% 6%, rgba(53,169,255,.18), transparent 60%),
+      linear-gradient(180deg,#0a0705,#050303 76%);
+    display:flex; align-items:center; gap:64px;
+    padding:0 86px;
+  }
+  .shot{
+    width:300px; height:300px; border-radius:999px; object-fit:cover; flex:0 0 auto;
+    border:2px solid rgba(255,196,150,.24);
+    box-shadow:0 0 0 10px rgba(255,122,26,.10), 0 22px 60px rgba(0,0,0,.6);
+  }
+  .kicker{
+    font-family:"IBM Plex Mono", monospace; font-weight:500;
+    font-size:19px; letter-spacing:.15em; text-transform:uppercase;
+    color:#ff7a1a; margin-bottom:20px;
+  }
+  h1{font-size:66px; line-height:1.02; letter-spacing:-.032em; font-weight:600}
+  .rule{
+    width:132px; height:4px; border-radius:4px; margin:28px 0;
+    background:linear-gradient(90deg,#ff7a1a,#35a9ff);
+  }
+  p{font-size:26px; line-height:1.4; color:rgba(244,236,229,.84); max-width:22ch}
+  .site{
+    font-family:"IBM Plex Mono", monospace; font-size:20px;
+    color:#35a9ff; margin-top:30px; letter-spacing:.04em;
+  }
+</style>
+</head>
+<body>
+  <img class="shot" src="arjun.jpg" alt="">
+  <div>
+    <div class="kicker">Postdoctoral Scholar · SDSU</div>
+    <h1>Arjun Patel, PhD</h1>
+    <div class="rule"></div>
+    <p>Genome-scale modeling &amp; multi-omics analytics for biology.</p>
+    <div class="site">arjun.live</div>
+  </div>
+</body>
+</html>

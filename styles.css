@@ -4,6 +4,42 @@
    Committed dark theme: this palette does not invert.
    ========================================================================== */
 
+/* ── self-hosted type (no external requests) ────────────────────────────────
+   Plex Sans ships as a variable font, so one file covers 400–700.
+   Plex Mono is static, so 400 and 500 are separate files.
+   latin-ext is only fetched if a glyph actually needs it (unicode-range).   */
+
+@font-face{
+  font-family:"IBM Plex Sans"; font-style:normal; font-weight:100 700; font-display:swap;
+  src:url("assets/fonts/IBMPlexSans-var-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"IBM Plex Sans"; font-style:normal; font-weight:100 700; font-display:swap;
+  src:url("assets/fonts/IBMPlexSans-var-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"IBM Plex Mono"; font-style:normal; font-weight:400; font-display:swap;
+  src:url("assets/fonts/IBMPlexMono-400-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"IBM Plex Mono"; font-style:normal; font-weight:400; font-display:swap;
+  src:url("assets/fonts/IBMPlexMono-400-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"IBM Plex Mono"; font-style:normal; font-weight:500; font-display:swap;
+  src:url("assets/fonts/IBMPlexMono-500-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"IBM Plex Mono"; font-style:normal; font-weight:500; font-display:swap;
+  src:url("assets/fonts/IBMPlexMono-500-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
 :root{
   /* ground — warm near-black, biased toward the accent rather than neutral */
   --ink:      #0a0705;
@@ -66,6 +102,15 @@ a:hover{color:var(--flux)}
 }
 
 .container{width:min(1060px, calc(100% - 40px)); margin:0 auto}
+
+/* keyboard users can jump the nav; visible only when focused */
+.skip-link{
+  position:absolute; left:-9999px; top:0; z-index:100;
+  padding:10px 16px;
+  background:var(--flux); color:var(--on-flux);
+  font-weight:600; border-radius:0 0 10px 0;
+}
+.skip-link:focus{left:0; color:var(--on-flux)}
 
 /* ── header ─────────────────────────────────────────────────────────────── */
 
@@ -346,6 +391,16 @@ a span[aria-hidden]{
 .pub-list li::marker{color:var(--muted); font-family:var(--mono); font-size:12px}
 .pub-authors{color:rgba(244,236,229,.72)}
 .pub-title{color:var(--text)}
+/* every title resolves to its DOI */
+.pub-link{
+  color:inherit;
+  text-decoration:underline;
+  text-decoration-color:rgba(255,122,26,.32);
+  text-underline-offset:3px;
+  text-decoration-thickness:1px;
+  transition:color .18s ease, text-decoration-color .18s ease;
+}
+.pub-link:hover{color:var(--flux); text-decoration-color:var(--flux)}
 .pub-venue{
   font-family:var(--mono);
   font-size:12.5px;
