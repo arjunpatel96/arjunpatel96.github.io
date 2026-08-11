@@ -61,6 +61,11 @@
 <body>
   <a class="skip-link" href="#top">Skip to content</a>
   <header class="header">
+    <!-- 0x0 fixed anchors: :target on #menu drives the mobile menu, #menu-closed is the
+         inert target the close button jumps to. both must be fixed — targeting anything
+         in normal flow scrolls the page out from under the reader. -->
+    <i id="menu" class="menu-anchor" aria-hidden="true"></i>
+    <i id="menu-closed" class="menu-anchor" aria-hidden="true"></i>
     <div class="container nav">
       <a class="brand" href="#top" aria-label="Home">
         <span class="dot"></span><span>Arjun Patel, PhD</span>
@@ -74,6 +79,10 @@
         <a href="#cv">CV</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <!-- mobile only; CSS :target drives the open/closed state, no JS -->
+      <a class="navtoggle open" href="#menu" aria-label="Open menu"><span class="bars" aria-hidden="true"></span></a>
+      <a class="navtoggle close" href="#menu-closed" aria-label="Close menu"><span class="bars" aria-hidden="true"></span></a>
     </div>
   </header>
 
@@ -84,8 +93,6 @@
           <div>
             <p class="kicker">Postdoctoral Scholar · San Diego State University</p>
             <h1>Genome-scale modeling &amp; data analytics for biology.</h1>
-            <p class="lead">I’m a computational systems biologist with 14 peer-reviewed publications and six years building predictive genome-scale models of microbial metabolism. I currently apply metabolism-and-expression (ME) modeling to plant rhizosphere bacteria for bioenergy applications, and I specialize in translating multi-omics data into models that guide strain engineering.</p>
-
             <div class="cta">
               <a class="btn" href="assets/Arjun_Patel_CV.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
               <a class="btn ghost" href="#contact">Contact</a>

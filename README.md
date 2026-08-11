@@ -54,6 +54,19 @@ applies to arjun.live right after a push.
 **Update the CV** — replace `assets/Arjun_Patel_CV.pdf`, keeping the filename so
 the two download links keep working.
 
+**Change a nav link** — the nav exists twice, in `index.html` and `404.html`
+(the 404 copy uses absolute `/#…` hrefs). Edit both or they drift apart.
+
+Below 900px the links collapse behind a hamburger, driven purely by CSS
+`:target` — no JavaScript. The two 0×0 `.menu-anchor` elements at the top of
+`<header>` are the toggle targets: the ☰ link points at `#menu` (which opens
+the menu via `#menu:target ~ .nav .navlinks`) and the ✕ points at
+`#menu-closed`, which is styled by nothing and so just closes it. Both anchors
+are `position:fixed` on purpose — a target in normal flow makes the browser
+scroll the page out from under the reader. Tapping any nav link changes the
+hash to `#about`/`#cv`/etc., which un-targets `#menu`, so the menu closes
+itself.
+
 **Add a publication** — publications are inline HTML in `index.html` under
 `<div class="pubs">`. Copy an existing `<li>` and fill in the four parts:
 
